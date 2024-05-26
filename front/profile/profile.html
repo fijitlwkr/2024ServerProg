@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" href="profile_style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="profile-container">
+        <h2>Profile</h2>
+        <div class="profile-info">
+            <p><strong>Nickname:</strong> <span id="nickname">UserNickname</span></p>
+            <p>
+                <strong>Introduction:</strong> 
+                <textarea id="introduction" rows="3">This is a brief introduction.</textarea>
+            </p>
+        </div>
+
+        <h3>Joined Groups</h3>
+        <div id="groups-container">
+            <!-- Group blocks will be dynamically added here -->
+        </div>
+
+        <button id="ok-btn">OK</button>
+    </div>
+    <script src="profile.js"></script>
+</body>
+</html>
