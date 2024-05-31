@@ -10,7 +10,7 @@ app = Flask(__name__)
 
 
 
-password = 'alalwl123!@#'
+password = 'temp'
 encoded_password = quote_plus(password)
 
 engine = create_engine(f'mysql+pymysql://root:{encoded_password}@localhost/sprog')
