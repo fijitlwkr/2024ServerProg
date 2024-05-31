@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schedule Registration</title>
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='schedule-registration_style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="form-container">
+        <h2>Schedule Registration</h2>
+        <form id="schedule-form" action="{{ url_for('newGroup')}}" method = 'post'>
+            <label for="group-name">Group Name:</label>
+            <input type="text" id="group-name" name="group-name" required>
+
+            <label for="group-info">Group Info:</label>
+            <textarea id="group-info" name="group-info" rows="4" required></textarea>
+
+            <div id="tasks-container">
+                <label>Tasks:</label>
+                <div class="task">
+                    <input type="text" class="task-input" name="task[]" required>
+                    <button type="button" class="delete-task-btn">Delete</button>
+                </div>
+            </div>
+
+            <button type="button" id="add-task-btn">Add Task</button>
+            <input type="submit" id="create-btn" value="Create">
+        </form>
+    </div>
+<!--    <script src="schedule-registration.js"></script>-->
+</body>
+</html>

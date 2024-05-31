@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail View - Group 1</title>
+    	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='group-details_style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="details-container">
+        <h2>Group Name: {{ group.name }}</h2>
+        <p>Group Info: {{ group.description }}</p>
+        
+        <h3>Check List</h3>
+        		{% for i in checklist %}
+        <ul>
+            <li>{{i.content}}</li>
+        </ul>
+		{% endfor %}
+
+        <div class="button-container">
+            <button id="join-btn">Join Group</button>
+            <button id="cancel-btn">Cancel</button>
+        </div>
+    </div>
+    <script src="group-details.js"></script>
+</body>
+</html>
