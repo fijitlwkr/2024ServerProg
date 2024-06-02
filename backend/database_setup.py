@@ -22,6 +22,7 @@ class User(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String(100), nullable=False)
     password = Column(String(100), nullable=False)
+    description = Column(String(100))
 
     @property
     def serialize(self):
@@ -30,6 +31,7 @@ class User(Base):
             'name': self.name,
             'id': self.id,
             'password' : self.password,
+            'description' : self.description,
             'groups': [group.serialize for group in self.groups]
         }
 
