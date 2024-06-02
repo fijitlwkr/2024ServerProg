@@ -1,42 +1,23 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const groupName = 'Example Group'; // 실제 데이터베이스에서 가져온 그룹 이름으로 대체
-    const groupInfo = 'This is some information about the example group.'; // 실제 데이터베이스에서 가져온 그룹 정보로 대체
-    const checklistItems = [
-        { text: 'Check Item 1', completed: false },
-        { text: 'Check Item 2', completed: true },
-        { text: 'Check Item 3', completed: false }
-    ]; // 실제 데이터베이스에서 가져온 체크리스트 항목으로 대체
+    const memberListBtn = document.getElementById('member-list-btn');
+    const cancelBtn = document.getElementById('cancel-btn');
+    const leaveBtn = document.getElementById('leave-btn');
 
-    document.getElementById('group-name').textContent = `Group Name: ${groupName}`;
-    document.getElementById('group-info').textContent = `Group Info: ${groupInfo}`;
-
-    const checklist = document.getElementById('checklist');
-    checklistItems.forEach(item => {
-        const listItem = document.createElement('li');
-        const checkbox = document.createElement('input');
-        checkbox.type = 'checkbox';
-        checkbox.checked = item.completed;
-        const label = document.createElement('label');
-        label.textContent = item.text;
-        listItem.appendChild(checkbox);
-        listItem.appendChild(label);
-        checklist.appendChild(listItem);
-
-        checkbox.addEventListener('change', () => {
-            item.completed = checkbox.checked;
-            // 완료 여부를 데이터베이스에 저장하는 로직을 여기에 추가하세요.
-        });
+    memberListBtn.addEventListener('click', () => {
+        window.location.href = 'member-list.html'; // 회원 목록 조회 페이지로 이동
     });
 
-    document.getElementById('cancel-btn').addEventListener('click', () => {
-        window.location.href = 'profile.html'; // 프로필 페이지로 이동
+    cancelBtn.addEventListener('click', () => {
+        window.location.href = 'home.html'; // 홈 페이지로 이동
     });
 
-    document.getElementById('leave-btn').addEventListener('click', () => {
-        if (confirm('그룹을 탈퇴하시겠습니까?')) {
-            // 그룹 탈퇴 로직을 여기에 추가하세요.
-            alert('그룹을 탈퇴했습니다.');
-            window.location.href = 'profile.html'; // 프로필 페이지로 이동
-        }
+    leaveBtn.addEventListener('click', () => {
+        // 그룹 탈퇴 로직 추가
+        // 서버에 요청을 보내고 응답을 처리
+        alert('그룹을 탈퇴했습니다.');
+        window.location.href = 'home.html'; // 홈 페이지로 이동
     });
+
+    // 여기에 체크리스트 항목을 동적으로 추가하는 로직을 추가하세요.
+    // 예를 들어, 서버에서 데이터를 받아와서 추가합니다.
 });

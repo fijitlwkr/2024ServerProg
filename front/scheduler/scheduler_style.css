@@ -1,7 +1,6 @@
 body {
     background-color: #f2b705;
     color: #ffffff;
-    /* font-family: Arial, sans-serif; */
     font-family: 'Inknut Antiqua', serif;
     margin: 0;
     padding: 0;
@@ -14,6 +13,25 @@ body {
     background-color: #402719;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+header {
+    display: flex;
+    justify-content: flex-end;
+}
+
+#member-list-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #6200ea;
+    color: #ffffff;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+#member-list-btn:hover {
+    background-color: #4a00b3;
 }
 
 h2, h3 {
