@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='profile_style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="profile-container">
+        <h2>Profile</h2>
+        <div class="profile-info">
+            <p><strong>Nickname:</strong> <span id="nickname">{{user.name}}</span></p>
+            <p>
+                <strong>Introduction:</strong> 
+                <textarea id="introduction" rows="3">{{user.description}}</textarea>
+            </p>
+        </div>
+
+        <h3>Joined Groups</h3>
+        <div id="groups-container">
+            <main class="block-container">
+                                {% for i in groups %}
+                <form action="/groups/{{i.id}}" method="get">
+
+
+            <button type="submit" class="block list-block">{{i.name}}</button>
+        </form>
+                        {% endfor %}
+
+            </main>
+        </div>
+            <form action="/" method="get">
+        <button id="ok-btn">OK</button>
+            </form>
+
+    </div>
+    <script src="profile.js"></script>
+</body>
+</html>
