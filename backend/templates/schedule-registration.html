@@ -29,6 +29,44 @@
             <input type="submit" id="create-btn" value="Create">
         </form>
     </div>
-<!--    <script src="schedule-registration.js"></script>-->
+    <script>
+        // JavaScript 코드
+        document.addEventListener('DOMContentLoaded', function () {
+            const addTaskBtn = document.getElementById('add-task-btn');
+            const tasksContainer = document.getElementById('tasks-container');
+
+            addTaskBtn.addEventListener('click', function () {
+                // 새로운 작업 입력 창을 생성
+                const newTaskDiv = document.createElement('div');
+                newTaskDiv.classList.add('task');
+
+                const newTaskInput = document.createElement('input');
+                newTaskInput.type = 'text';
+                newTaskInput.classList.add('task-input');
+                newTaskInput.name = 'task[]';
+                newTaskInput.required = true;
+
+                const deleteTaskBtn = document.createElement('button');
+                deleteTaskBtn.type = 'button';
+                deleteTaskBtn.classList.add('delete-task-btn');
+                deleteTaskBtn.textContent = 'Delete';
+
+                deleteTaskBtn.addEventListener('click', function () {
+                    tasksContainer.removeChild(newTaskDiv);
+                });
+
+                newTaskDiv.appendChild(newTaskInput);
+                newTaskDiv.appendChild(deleteTaskBtn);
+                tasksContainer.appendChild(newTaskDiv);
+            });
+
+            // 초기 삭제 버튼에 이벤트 리스너 추가
+            document.querySelectorAll('.delete-task-btn').forEach(button => {
+                button.addEventListener('click', function (event) {
+                    event.target.closest('.task').remove();
+                });
+            });
+        });
+    </script>
 </body>
 </html>
