@@ -24,6 +24,8 @@ class User(Base):
     password = Column(String(100), nullable=False)
     description = Column(String(100))
 
+    groups = relationship('Group', secondary='user_group', back_populates='users')
+
     @property
     def serialize(self):
         """Return object data in easily serializeable format"""
@@ -42,7 +44,7 @@ class Group(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String(100), nullable=False)
     description = Column(String(100), nullable=False)
-
+    users = relationship('User', secondary='user_group', back_populates='groups')
     @property
     def serialize(self):
         """Return object data in easily serializeable format"""

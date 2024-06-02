@@ -41,10 +41,22 @@ def groupDetail(group_id=None):
 
 
 
-@app.route('/groups/<int:group_id>/new', methods=['GET', 'POST'])
-def newGroupMem(bookstore_id):
+@app.route('/groups/<int:group_id>/<int:user_id>/new', methods=['POST'])
+def newGroupMem(group_id=None,user_id=None):
+    group = session.query(Group).filter_by(id=group_id).one()
+    user = session.query(User).filter_by(id=user_id).one()
 
-    return 0
+    session.add(user)
+    session.add(group)
+    session.commit()
+
+    # Associate the user with the group
+    user.groups.append(group)
+
+    # Commit the session to save the association
+    session.commit()
+
+    return redirect(url_for('homeList'))
 
 @app.route('/groups/new', methods=['GET', 'POST'])
 def newGroup():
