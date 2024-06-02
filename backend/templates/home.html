@@ -10,7 +10,9 @@
 <body>
     <header>
         <h1>Check List with GGG</h1>
+                <form action="/user/1" method="get">
         <button id="profile-btn">Profile</button>
+                </form>
     </header>
     <main class="block-container">
                 		{% for i in group %}
@@ -22,7 +24,6 @@
         <form action="/groups/new" method="get">
     <button type="submit" class = "add-btn">Add</button>
 </form>
-
     </main>
     <script src="home.js"></script>
 </body>
