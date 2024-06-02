@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scheduler</title>
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='scheduler_style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="scheduler-container">
+        <h2 id="group-name">Group Name: {{group.name}}</h2>
+        <p id="group-info">Group Info: {{group.description}}.</p>
+
+
+        <h3>Check List</h3>
+        		{% for i in checklist %}
+        <ul>
+            <li>{{i.content}}</li>
+            <input type="checkbox" {% if i.completed %}checked{% endif %} disabled>
+        </ul>
+		{% endfor %}
+
+        <div class="button-container">
+            <form action="/groups/{{group.id}}/edit" method="get">
+            <button id="cancel-btn">Update</button>
+            </form>
+
+            <form action="/" method="get">
+            <button id="leave-btn">Leave Group</button>
+            </form>
+        </div>
+    </div>
+    <script src="scheduler.js"></script>
+</body>
+</html>

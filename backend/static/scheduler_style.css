@@ -1,0 +1,63 @@
+body {
+    background-color: #f2b705;
+    color: #ffffff;
+    /* font-family: Arial, sans-serif; */
+    font-family: 'Inknut Antiqua', serif;
+    margin: 0;
+    padding: 0;
+}
+
+.scheduler-container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #402719;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+h2, h3 {
+    text-align: center;
+}
+
+#checklist {
+    list-style-type: none;
+    padding: 0;
+}
+
+#checklist li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+#checklist li input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #6200ea;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+button#cancel-btn {
+    background-color: #03dac6;
+}
+
+button#leave-btn {
+    background-color: #b00020;
+}
+
+button:hover {
+    filter: brightness(90%);
+}
