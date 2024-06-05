@@ -28,15 +28,5 @@
         </div>
     </form>
         <div>
-    {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            <script type="text/javascript">
-                var messages = {{ messages|tojson }};
-                messages.forEach(function(message) {
-                    alert(message);
-                });
-            </script>
-        {% endif %}
-    {% endwith %}
 </body>
 </html>

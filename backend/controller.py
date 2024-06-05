@@ -77,8 +77,8 @@ def register():
     if form.validate_on_submit():
         user = session.query(User).filter_by(name=form.username.data).first()
         if user:
-            flash('유저 이름이 이미 존재합니다.')
-            return redirect(url_for('register'))
+            return '유저 이름이 이미 존재합니다.'
+            # return redirect(url_for('register'))
 
         new_user = User(name=form.username.data)
         new_user.set_password(form.password.data)  # 비밀번호 해시화하여 설정
@@ -120,11 +120,11 @@ def newGroupMem(group_id=None,user_id=None):
     session.add(group)
     session.commit()
 
-    # Associate the user with the group
-    user.groups.append(group)
-
-    # Commit the session to save the association
-    session.commit()
+    if group not in user.groups:
+        user.groups.append(group)
+        session.commit()
+    else:
+        return '이미 가입된 유저입니다.'
 
     return redirect(url_for('homeList'))
 
@@ -136,7 +136,8 @@ def groupMemDelete(group_id=None,user_id=None):
     if group in user.groups:
         user.groups.remove(group)
         session.commit()
-
+    else :
+        return '이미 없는 유저입니다.'
     return redirect(url_for('homeList'))
 
 @app.route('/groups/new', methods=['GET', 'POST'])
