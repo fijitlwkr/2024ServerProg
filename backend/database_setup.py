@@ -95,7 +95,7 @@ class CheckList(Base):
 
 
 
-password = 'alalwl123!@#'
+password = 'temp'
 encoded_password = quote_plus(password)
 
 

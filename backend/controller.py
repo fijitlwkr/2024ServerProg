@@ -25,7 +25,7 @@ login_manager.init_app(app)
 login_manager.login_view = 'login'
 
 
-password = 'alalwl123!@#'
+password = 'temp'
 encoded_password = quote_plus(password)
 
 engine = create_engine(f'mysql+pymysql://root:{encoded_password}@localhost/sprog')
