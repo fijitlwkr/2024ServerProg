@@ -26,7 +26,7 @@
             <button id="cancel-btn">Update</button>
             </form>
 
-            <form action="/" method="get">
+            <form action="/groups/{{ group.id }}/{{ current_user.id }}/remove" method="post">
             <button id="leave-btn">Leave Group</button>
             </form>
         </div>
