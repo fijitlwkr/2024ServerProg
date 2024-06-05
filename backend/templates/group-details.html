@@ -20,7 +20,7 @@
 		{% endfor %}
 
         <div class="button-container">
-            <form action="/groups/{{group.id}}/5/new" method="post">
+            <form action="/groups/{{group.id}}/{{current_user.id}}/new" method="post">
             <button id="join-btn">Join Group</button>
             </form>
                         <form action="/" method="get">
