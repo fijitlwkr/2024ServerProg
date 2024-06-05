@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Check List with GGG</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='login_style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="login-container">
+        <h1>Check List with GGG</h1>
+        <form method="POST">
+            {{ form.hidden_tag() }}
+            <div class="input-group">
+                {{ form.username.label }}<br>
+                {{ form.username(size=32) }}
+            </div>
+            <div class="input-group">
+                {{ form.password.label }}<br>
+                {{ form.password(size=32) }}
+            </div>
+            <div class="button-group">
+                {{ form.submit() }}
+            </div>
+        </form>
+        <form action="/register" method="get">
+        <button id="sign-in-btn" type="submit">Sign In</button>
+        </form>
+    </div>
+    <script src="login.js"></script>
+</body>
+</html>

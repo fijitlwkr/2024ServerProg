@@ -1,16 +1,31 @@
-from flask import Flask, render_template, request, redirect, url_for, jsonify
+from flask import Flask, render_template, request, redirect, url_for, flash
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from database_setup import Base, Group, User, CheckList, user_group
+
+
+# ㅁㄴㅇㅁㅇ
+
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
+from flask_wtf import FlaskForm
+from wtforms import StringField, PasswordField, SubmitField
+from wtforms.validators import DataRequired
+
+# ㄴㅁㅇㅁㅇ
+
 
 from urllib.parse import quote_plus
 
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = 'your_secret_key'
+
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = 'login'
 
 
-
-password = 'temp'
+password = 'alalwl123!@#'
 encoded_password = quote_plus(password)
 
 engine = create_engine(f'mysql+pymysql://root:{encoded_password}@localhost/sprog')
@@ -21,13 +36,68 @@ DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
 
+@login_manager.user_loader
+def load_user(user_id):
+    return session.query(User).get(int(user_id))
+
+class LoginForm(FlaskForm):
+    username = StringField('Username', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired()])
+    submit = SubmitField('Login')
+
+
+class RegistrationForm(FlaskForm):
+    username = StringField('아이디', validators=[DataRequired()])
+    password = PasswordField('비밀번호', validators=[DataRequired()])
+    description = StringField('자기소개', validators=[DataRequired()])
+    submit = SubmitField('회원가입')
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('homeList'))
+
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = session.query(User).filter_by(name=form.username.data).first()
+        if user and user.check_password(form.password.data):
+            login_user(user)
+            return redirect(url_for('homeList'))
+    return render_template('login.html', form=form)
+
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('login'))
+
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        user = session.query(User).filter_by(name=form.username.data).first()
+        if user:
+            flash('유저 이름이 이미 존재합니다.')
+            return redirect(url_for('register'))
+
+        new_user = User(name=form.username.data)
+        new_user.set_password(form.password.data)  # 비밀번호 해시화하여 설정
+        new_user.set_description(form.description.data) # 개인소개 설정
+        session.add(new_user)
+        session.commit()
+        flash('회원가입이 성공적으로 완료되었습니다.')
+
+        return redirect(url_for('login'))
+
+    return render_template('sign-up.html', title='Register', form=form)
+
 @app.route('/groups/<int:group_id>/list')
 def groupList(group_id=None):
     group = session.query(Group).filter_by(id=group_id).one()
     users = session.query(user_group).filter_by(group_id=group_id)
     checklist = session.query(CheckList).filter_by(group_id=group_id)
     return render_template(
-        'group-details.html', group=group, user=users, checklist=checklist)
+        'group-details.html', group=group, current_user = current_user, user=users, checklist=checklist)
 
 @app.route('/groups/<int:group_id>')
 def groupDetail(group_id=None):
@@ -37,7 +107,7 @@ def groupDetail(group_id=None):
     checklist = session.query(CheckList).filter_by(group_id=group_id)
     print(checklist)
     return render_template(
-        'scheduler.html', group=group, user=users, checklist=checklist)
+        'scheduler.html', group=group, user=users, checklist=checklist,current_user = current_user)
 
 
 
@@ -55,6 +125,17 @@ def newGroupMem(group_id=None,user_id=None):
 
     # Commit the session to save the association
     session.commit()
+
+    return redirect(url_for('homeList'))
+
+@app.route('/groups/<int:group_id>/<int:user_id>/remove', methods=['POST'])
+def groupMemDelete(group_id=None,user_id=None):
+    group = session.query(Group).filter_by(id=group_id).one()
+    user = session.query(User).filter_by(id=user_id).one()
+
+    if group in user.groups:
+        user.groups.remove(group)
+        session.commit()
 
     return redirect(url_for('homeList'))
 
@@ -111,11 +192,15 @@ def editGroup(group_id):
 
 
 
+
+
+
+
 @app.route('/')
 def homeList():
     group = session.query(Group).all()
     return render_template(
-        'home.html', group=group)
+        'home.html', group=group, current_user = current_user)
 
 
 @app.route('/restaurants/<int:group_id>/<int:checklist_id>/delete',

@@ -13,15 +13,19 @@ from urllib.parse import quote_plus
 
 from sqlalchemy.orm import declarative_base
 
+from werkzeug.security import generate_password_hash, check_password_hash
+
+from flask_login import UserMixin
+
 Base = declarative_base()
 
 
-class User(Base):
+class User(Base, UserMixin):
     __tablename__ = 'user'
 
     id = Column(Integer, primary_key=True)
     name = Column(String(100), nullable=False)
-    password = Column(String(100), nullable=False)
+    password = Column(String(255), nullable=False)
     description = Column(String(100))
 
     groups = relationship('Group', secondary='user_group', back_populates='users')
@@ -36,6 +40,16 @@ class User(Base):
             'description' : self.description,
             'groups': [group.serialize for group in self.groups]
         }
+
+    def set_password(self, password1):
+        self.password = generate_password_hash(password1)
+
+    def set_description(self, descrip):
+            self.description = descrip
+
+    def check_password(self, password1):
+        return check_password_hash(self.password, password1)
+        #return self.password == password1
 
 
 class Group(Base):
