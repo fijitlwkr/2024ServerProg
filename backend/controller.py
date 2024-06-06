@@ -8,7 +8,7 @@ from database_setup import Base, Group, User, CheckList, user_group
 
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField
+from wtforms import StringField, PasswordField, SubmitField, TextAreaField
 from wtforms.validators import DataRequired
 
 # ㄴㅁㅇㅁㅇ
@@ -25,7 +25,7 @@ login_manager.init_app(app)
 login_manager.login_view = 'login'
 
 
-password = 'temp'
+password = 'alalwl123!@#'
 encoded_password = quote_plus(password)
 
 engine = create_engine(f'mysql+pymysql://root:{encoded_password}@localhost/sprog')
@@ -51,6 +51,13 @@ class RegistrationForm(FlaskForm):
     password = PasswordField('비밀번호', validators=[DataRequired()])
     description = StringField('자기소개', validators=[DataRequired()])
     submit = SubmitField('회원가입')
+
+class GroupForm(FlaskForm):
+    group_name = StringField('Group Name', validators=[DataRequired()])
+    group_info = TextAreaField('Group Info', validators=[DataRequired()])
+    submit = SubmitField('Edit Group')
+
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
@@ -193,10 +200,6 @@ def editGroup(group_id):
 
 
 
-
-
-
-
 @app.route('/')
 def homeList():
     group = session.query(Group).all()
@@ -204,12 +207,13 @@ def homeList():
         'home.html', group=group, current_user = current_user)
 
 
-@app.route('/restaurants/<int:group_id>/<int:checklist_id>/delete',
+@app.route('/groups/<int:group_id>/<int:checklist_id>/delete',
            methods=['POST'])
 def deleteCheckList(group_id, checklist_id):
     checklist = session.query(CheckList).filter_by(id=checklist_id).one()
     session.delete(checklist)
     session.commit()
+    print('확인!!')
     return redirect(url_for('homeList'))
 
 
